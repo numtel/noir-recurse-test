@@ -86,7 +86,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Loading outer circuit... ⏳");
     const { program: outerProgram } = await getOuterCircuit();
     const outerNoir = new Noir(outerProgram);
-    const outerBackend = new UltraHonkBackend(outerProgram.bytecode, { threads: 8 }, { recursive: true });
+    const outerBackend = new UltraHonkBackend(outerProgram.bytecode, { threads: 8 });
     show("logs", "Outer circuit loaded. ✅");
 
     show("logs", "Generating outer witness... ⏳");
