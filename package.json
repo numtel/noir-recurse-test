@@ -10,9 +10,9 @@
   "license": "MIT",
   "description": "Testing noir recursion",
   "dependencies": {
-    "@aztec/bb.js": "^0.84.0",
-    "@noir-lang/noir_js": "^1.0.0-beta.3",
-    "@noir-lang/noir_wasm": "^1.0.0-beta.3"
+    "@aztec/bb.js": "0.84.0",
+    "@noir-lang/noir_js": "1.0.0-beta.3",
+    "@noir-lang/noir_wasm": "1.0.0-beta.3"
   },
   "devDependencies": {
     "vite": "^6.2.6"

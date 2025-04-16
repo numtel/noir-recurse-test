@@ -9,6 +9,7 @@ import noirc from "@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm?url";
 
 import innerMain from "./inner/src/main.nr?url";
 import innerNargoToml from "./inner/Nargo.toml?url";
+import innerVkFields from "./inner/target/vk_fields.json";
 import outerMain from "./outer/src/main.nr?url";
 import outerNargoToml from "./outer/Nargo.toml?url";
 
@@ -32,10 +33,6 @@ async function getOuterCircuit() {
   fm.writeFile("./src/main.nr", body);
   fm.writeFile("./Nargo.toml", nargoTomlBody);
   return await compile(fm);
-}
-
-function foreignCallHandler() {
-  throw new Error('Unexpected foreign call');
 }
 
 const show = (id, content) => {
@@ -74,6 +71,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Generating recursive inputs... ⏳");
     const recursiveProof = await innerBackend.generateProofForRecursiveAggregation(innerWitness);
 
+    // TODO how to generate the VK here within the webapp?
     const recursiveArtifacts = await innerBackend.generateRecursiveProofArtifacts(
       {
         publicInputs: innerPublicInputs,
@@ -90,18 +88,19 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Outer circuit loaded. ✅");
 
     show("logs", "Generating outer witness... ⏳");
+
+    // TODO Notice they don't match
+    console.log(innerVkFields, recursiveArtifacts);
+
     const outerInputs = {
       public_inputs: recursiveProof.publicInputs,
       key_hash: '0x0',
       proof: recursiveProof.proof,
-      verification_key: recursiveArtifacts.vkAsFields,
+      verification_key: innerVkFields,
       z: '0xd00d',
     };
 
-    const { witness: outerWitness } = await outerNoir.execute(
-      outerInputs,
-      foreignCallHandler,
-    );
+    const { witness: outerWitness } = await outerNoir.execute(outerInputs);
     show("logs", "Generated outer witness. ✅");
 
     show("logs", "Generating outer proof... ⏳");
