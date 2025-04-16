@@ -94,11 +94,12 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Generated outer witness. ✅");
 
     show("logs", "Generating outer proof... ⏳");
+    const startTime = Date.now();
     const {
       proof: outerProof,
       publicInputs: outerPublicInputs
     } = await outerBackend.generateProof(outerWitness);
-    show("logs", "Generated outer proof. ✅");
+    show("logs", `Generated outer proof. ✅ (${(Date.now() - startTime)/1000}s)`);
     show("results", outerProof);
     console.log(outerProof, outerPublicInputs);
 
