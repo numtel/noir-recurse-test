@@ -46,7 +46,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Loading inner circuit... ⏳");
     const { program: innerProgram } = await getInnerCircuit();
     const innerNoir = new Noir(innerProgram);
-    const innerBackend = new UltraHonkBackend(innerProgram.bytecode, { threads: 8 }, { recursive: true });
+    const innerBackend = new UltraHonkBackend(innerProgram.bytecode, { threads: navigator.hardwareConcurrency || 4 }, { recursive: true });
     show("logs", "Inner circuit loaded. ✅");
 
     show("logs", "Generating inner witness... ⏳");
@@ -78,7 +78,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     show("logs", "Loading outer circuit... ⏳");
     const { program: outerProgram } = await getOuterCircuit();
     const outerNoir = new Noir(outerProgram);
-    const outerBackend = new UltraHonkBackend(outerProgram.bytecode, { threads: 8 });
+    const outerBackend = new UltraHonkBackend(outerProgram.bytecode, { threads: navigator.hardwareConcurrency || 4 });
     show("logs", "Outer circuit loaded. ✅");
 
     show("logs", "Generating outer witness... ⏳");
