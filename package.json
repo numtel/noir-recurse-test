@@ -12,9 +12,7 @@
   "dependencies": {
     "@aztec/bb.js": "0.84.0",
     "@noir-lang/noir_js": "1.0.0-beta.3",
-    "@noir-lang/noir_wasm": "1.0.0-beta.3"
-  },
-  "devDependencies": {
+    "@noir-lang/noir_wasm": "1.0.0-beta.3",
     "vite": "^6.2.6"
   }
 }
